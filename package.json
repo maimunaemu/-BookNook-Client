@@ -6,12 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "better-auth": "^1.7.14",
+    "lucide-react": "^1.65.0",
+    "mongodb": "^7.8.0",
     "next": "16.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "sonner": "^2.0.8",
+    "swiper": "^14.4.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
