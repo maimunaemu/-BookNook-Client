@@ -52,7 +52,7 @@ export default function LoginForm() {
 
   return (
     <section className="page-width grid min-h-[68vh] items-center gap-12 py-12 lg:grid-cols-[1fr_0.85fr] lg:py-16">
-      <div className="hidden overflow-hidden rounded-[1.6rem] bg-[#203b2e] lg:block">
+      <div className="hidden overflow-hidden rounded-[1.6rem] bg-[#0f172a] lg:block">
         <div
           className="flex min-h-[570px] flex-col justify-end bg-cover bg-center p-12 text-white"
           style={{
@@ -60,7 +60,7 @@ export default function LoginForm() {
               "linear-gradient(0deg,rgba(23,43,32,.92),rgba(23,43,32,.08)),url(https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80)",
           }}
         >
-          <p className="eyebrow !text-[#e7b59e]">The next chapter starts here</p>
+          <p className="eyebrow !text-[#bae6fd]">The next chapter starts here</p>
           <h1 className="serif mt-4 max-w-md text-5xl leading-[1.05]">Good to have you back.</h1>
           <p className="mt-4 max-w-sm text-sm leading-6 text-white/75">Your next read—and the readers who love it—are just around the corner.</p>
         </div>
@@ -88,15 +88,20 @@ export default function LoginForm() {
               <input className="field pl-10" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
             </span>
           </label>
-          <label className="block text-sm font-medium">
-            Password
+          <div className="block text-sm font-medium">
+            <div className="flex items-center justify-between">
+              <label htmlFor="login-password">Password</label>
+              <button type="button" className="forgot-password-link cursor-pointer text-xs font-medium transition-colors hover:underline underline-offset-4">
+                Forgot Password?
+              </button>
+            </div>
             <span className="relative mt-1.5 block">
-              <input className="field pr-11" type={showPassword ? "text" : "password"} autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} />
+              <input id="login-password" className="field pr-11" type={showPassword ? "text" : "password"} autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} />
               <button type="button" onClick={() => setShowPassword((show) => !show)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#858d83]" aria-label={showPassword ? "Hide password" : "Show password"}>
                 {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
               </button>
             </span>
-          </label>
+          </div>
           <button type="submit" disabled={busy} className="button-primary mt-2 w-full">
             {busy && <LoaderCircle size={16} className="animate-spin" />}
             {busy ? "Opening your nook…" : "Log in"}

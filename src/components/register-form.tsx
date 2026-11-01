@@ -119,14 +119,14 @@ export default function RegisterForm() {
           Already have a spot? <Link href="/login" className="font-semibold text-[#244b3a] hover:text-[#bd7158]">Log in</Link>
         </p>
       </div>
-      <div className="relative hidden min-h-[575px] overflow-hidden rounded-[1.6rem] bg-[#203b2e] lg:block">
+      <div className="relative hidden min-h-[575px] overflow-hidden rounded-[1.6rem] bg-[#0f172a] lg:block">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url(https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1200&q=80)" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#172b21]/95 via-[#172b21]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/95 via-[#0f172a]/30 to-transparent" />
         <div className="absolute bottom-0 p-12 text-white">
-          <p className="eyebrow !text-[#e7b59e]">Good stories make their rounds</p>
+          <p className="eyebrow !text-[#bae6fd]">Good stories make their rounds</p>
           <p className="serif mt-4 max-w-md text-4xl leading-tight">A book you love might be the book someone else needs.</p>
           <p className="mt-4 max-w-sm text-sm leading-6 text-white/70">Bring your shelf into a community of curious readers.</p>
         </div>

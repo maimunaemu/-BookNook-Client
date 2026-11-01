@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BookOpen, ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import ThemeToggle from "@/components/theme-toggle";
+import BookNookLogo from "@/components/booknook-logo";
 
 const navigation = [
   { label: "Home", href: "/" },
@@ -37,15 +38,9 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-[#e9e5db] bg-[#f7f5ef]/95 backdrop-blur-md">
-        <div className="page-width flex h-[76px] items-center justify-between gap-5">
-          <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="BookNook home">
-            <span className="flex size-10 items-center justify-center rounded-full bg-[#244b3a] text-white">
-              <BookOpen size={19} strokeWidth={1.7} />
-            </span>
-            <span>
-              <span className="serif block text-[1.3rem] leading-5 text-[#244b3a]">BookNook</span>
-              <span className="mt-1 block text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[#848a7e]">The Reading Atelier</span>
-            </span>
+        <div className="page-width flex h-[76px] items-center justify-between gap-5 max-[380px]:gap-2 max-[380px]:px-3">
+          <Link href="/" className="flex shrink-0 items-center gap-2.5 max-[380px]:gap-1.5" aria-label="BookNook home">
+            <BookNookLogo subtitle />
           </Link>
 
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
@@ -53,8 +48,8 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-[0.83rem] transition-colors hover:text-[#bd7158] ${
-                  pathname === item.href ? "font-semibold text-[#244b3a]" : "text-[#606961]"
+                className={`text-[0.83rem] transition-colors hover:text-terracotta ${
+                  pathname === item.href ? "font-semibold text-forest" : "text-[#606961]"
                 }`}
               >
                 {item.label}
@@ -62,7 +57,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
             ))}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="flex shrink-0 items-center gap-3 max-[380px]:gap-2">
             <ThemeToggle />
             {!isPending && (session ? (
               <details className="group relative">
@@ -72,7 +67,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={session.user.image} alt="" className="size-8 rounded-full object-cover" />
                   ) : (
-                    <span className="flex size-8 items-center justify-center rounded-full bg-[#e1e9de] text-sm font-semibold text-[#244b3a]">
+                    <span className="flex size-8 items-center justify-center rounded-full bg-surface-soft text-sm font-semibold text-forest">
                       {session.user.name.slice(0, 1).toUpperCase()}
                     </span>
                   )}
@@ -90,29 +85,30 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
               </details>
             ) : (
               <div className="hidden items-center gap-2 sm:flex">
-                <Link href="/login" className="px-3 py-2 text-sm font-semibold text-[#244b3a] hover:text-[#bd7158]">Log in</Link>
+                <Link href="/login" className="px-3 py-2 text-sm font-semibold text-forest hover:text-terracotta">Log in</Link>
                 <Link href="/register" className="button-primary !min-h-10 !px-4 !text-xs">Join the Nook</Link>
               </div>
             ))}
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
-              className="flex size-10 items-center justify-center rounded-full border border-[#deded5] text-[#244b3a] hover:bg-white lg:hidden"
+              className="flex size-10 items-center justify-center rounded-full border border-[#deded5] text-forest hover:bg-white lg:hidden"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
             >
               {menuOpen ? <X size={19} /> : <Menu size={19} />}
             </button>
           </div>
         </div>
         {menuOpen && (
-          <nav className="border-t border-[#e9e5db] bg-[#f7f5ef] px-6 py-3 lg:hidden" aria-label="Mobile navigation">
+          <nav id="mobile-navigation" className="border-t border-[#e9e5db] bg-[#f7f5ef] px-6 py-3 lg:hidden" aria-label="Mobile navigation">
             {visibleNavigation.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="block rounded-lg px-2 py-3 text-sm font-medium text-[#445249] hover:bg-white"
+                className="block rounded-lg px-3 py-3 text-sm font-medium text-[#445249] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
               >
                 {item.label}
               </Link>
@@ -129,23 +125,25 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
 
       <main className="flex-1">{children}</main>
 
-      <footer className="mt-24 bg-[#203b2e] text-white">
+      <footer className="mt-24 bg-[#0f172a] text-white">
         <div className="page-width grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:py-16">
           <div>
-            <Link href="/" className="serif text-2xl">BookNook</Link>
+            <Link href="/" className="inline-flex" aria-label="BookNook home">
+              <BookNookLogo />
+            </Link>
             <p className="mt-3 max-w-sm text-sm leading-6 text-white/65">
               A little corner for the books we love and the people we haven’t met yet.
             </p>
           </div>
           <div>
-            <p className="eyebrow !text-[#d59b83]">Find your next read</p>
+            <p className="eyebrow !text-[#bae6fd]">Find your next read</p>
             <div className="mt-4 flex flex-col gap-2.5 text-sm text-white/75">
               <Link href="/books" className="hover:text-white">Browse the shelves</Link>
               <Link href="/register" className="hover:text-white">Join the reading room</Link>
             </div>
           </div>
           <div>
-            <p className="eyebrow !text-[#d59b83]">The Nook</p>
+            <p className="eyebrow !text-[#bae6fd]">The Nook</p>
             <p className="mt-4 max-w-xs text-sm leading-6 text-white/65">
               Good books travel further when we pass them along.
             </p>
