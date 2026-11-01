@@ -24,7 +24,7 @@ const socialProviders = process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIEN
 
 export const auth = betterAuth({
   appName: "BookNook",
-  baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
+  baseURL: process.env.BETTER_AUTH_URL || "https://book-nook-client-psi.vercel.app",
   basePath: "/api/auth",
   secret: authSecret,
   database: mongodbAdapter(database),
@@ -36,7 +36,7 @@ export const auth = betterAuth({
     autoSignIn: false,
   },
   trustedOrigins: [
-    process.env.NEXT_PUBLIC_AUTH_URL ?? "http://localhost:3000",
+    process.env.NEXT_PUBLIC_AUTH_URL || "https://book-nook-client-psi.vercel.app",
   ],
   hooks: {
     before: createAuthMiddleware(async (context) => {
