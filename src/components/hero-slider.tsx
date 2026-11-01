@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowDownRight, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useReducedMotion } from "framer-motion";
@@ -65,9 +65,6 @@ export default function HeroSlider() {
                   Browse books <ArrowRight size={16} />
                 </Link>
               </div>
-                <span className="absolute bottom-9 right-6 hidden items-center text-xs tracking-wide text-white/70 sm:flex" aria-hidden="true">
-                  <ArrowDownRight size={15} />
-                </span>
             </div>
           </SwiperSlide>
         ))}
