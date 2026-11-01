@@ -35,11 +35,14 @@ export default function RegisterForm() {
       toast.error("Use at least 6 characters, with one uppercase and one lowercase letter.");
       return;
     }
-    try {
-      new URL(image);
-    } catch {
-      toast.error("Enter a valid photo URL.");
-      return;
+    const photoUrl = image.trim();
+    if (photoUrl) {
+      try {
+        new URL(photoUrl);
+      } catch {
+        toast.error("Enter a valid photo URL.");
+        return;
+      }
     }
 
     setBusy(true);
@@ -48,7 +51,7 @@ export default function RegisterForm() {
         name: name.trim(),
         email: email.trim(),
         password,
-        image: image.trim(),
+        ...(photoUrl ? { image: photoUrl } : {}),
         callbackURL: destination,
       });
       if (result.error) {
@@ -90,7 +93,7 @@ export default function RegisterForm() {
           </label>
           <label className="block text-sm font-medium">
             Photo URL
-            <input className="field mt-1.5" type="url" required placeholder="https://…" value={image} onChange={(event) => setImage(event.target.value)} />
+            <input className="field mt-1.5" type="url" placeholder="https://…" value={image} onChange={(event) => setImage(event.target.value)} />
           </label>
           <label className="block text-sm font-medium">
             Password

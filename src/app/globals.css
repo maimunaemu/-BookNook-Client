@@ -128,6 +128,14 @@ a {
   width: 100%;
 }
 
+.field.pl-10 {
+  padding-left: 2.5rem;
+}
+
+.field.pr-11 {
+  padding-right: 2.75rem;
+}
+
 .field:focus {
   border-color: var(--forest);
   box-shadow: 0 0 0 3px rgb(36 75 58 / 12%);
