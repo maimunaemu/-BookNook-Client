@@ -83,10 +83,6 @@ export default function BookForm({ book, onComplete, onCancel }: BookFormProps) 
       toast.error("Add a little more detail to the description (at least 20 characters).");
       return;
     }
-    if (!coverImage.trim()) {
-      toast.error("Upload or add a cover image before saving.");
-      return;
-    }
     if (!session) {
       toast.error("Please log in again before saving this book.");
       return;
@@ -149,7 +145,7 @@ export default function BookForm({ book, onComplete, onCancel }: BookFormProps) 
       <div>
         <div className="flex items-center justify-between gap-3">
           <label htmlFor="cover-upload" className="block text-sm font-medium">
-            Book cover <span className="text-[#bd7158]">*</span>
+            Book cover <span className="text-xs font-normal text-[#8a9188]">(Optional)</span>
           </label>
           <span className="text-xs text-[#8a9188]">JPG, PNG or WebP · up to 10 MB</span>
         </div>
@@ -167,7 +163,7 @@ export default function BookForm({ book, onComplete, onCancel }: BookFormProps) 
               Cover image URL
               <span className="relative mt-1 block">
                 <ImagePlus size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#899187]" />
-                <input className="field !min-h-10 pl-9 text-xs" type="url" required value={coverImage} onChange={(event) => setCoverImage(event.target.value)} placeholder="https://…" />
+                <input className="field !min-h-10 pl-9 text-xs" type="url" value={coverImage} onChange={(event) => setCoverImage(event.target.value)} placeholder="https://…" />
               </span>
             </label>
           </div>

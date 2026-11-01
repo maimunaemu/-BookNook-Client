@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { ArrowRight, BookHeart, Compass, Feather, Leaf, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import HeroSlider from "@/components/hero-slider";
 import BookCard from "@/components/book-card";
 import EmptyState from "@/components/empty-state";
+import LoadingState from "@/components/loading-state";
 import { apiRequest, ApiError } from "@/lib/api";
 import type { Book } from "@/lib/types";
 
@@ -52,16 +54,7 @@ export default function HomePage() {
 
         <div className="mt-9">
           {loading ? (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
-              {Array.from({ length: 6 }, (_, index) => (
-                <div key={index} className="animate-pulse">
-                  <div className="aspect-[4/4.7] rounded-xl bg-[#e9e7dd]" />
-                  <div className="mt-4 h-3 w-16 rounded bg-[#e9e7dd]" />
-                  <div className="mt-2 h-5 rounded bg-[#e9e7dd]" />
-                  <div className="mt-2 h-3 w-2/3 rounded bg-[#e9e7dd]" />
-                </div>
-              ))}
-            </div>
+            <LoadingState label="Gathering the newest books…" />
           ) : error ? (
             <div className="rounded-2xl border border-[#e5ddd3] bg-[#fffefa] px-6 py-10 text-center">
               <p className="serif text-2xl">The shelves are taking a breath.</p>
@@ -95,9 +88,6 @@ export default function HomePage() {
             <p className="mt-5 max-w-lg text-sm leading-7 text-[#6d766d]">
               BookNook brings readers together around the books they already own. Lend a story, discover another, and keep the good pages turning.
             </p>
-            <Link href="/register" className="button-primary mt-7">
-              Find your place here <ArrowRight size={16} />
-            </Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             {[
@@ -117,7 +107,52 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="page-width py-20 sm:py-24">
+      <motion.section
+        className="page-width py-20 sm:py-24"
+        data-reveal
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.45 }}
+      >
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="eyebrow">A simple way to share</p>
+          <h2 className="serif mt-3 text-4xl sm:text-5xl">How borrowing works.</h2>
+          <p className="mt-4 text-sm leading-6 text-[#747d73]">
+            Find a story, enjoy it at home, then return it so another reader can discover it.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {[
+            { number: "01", title: "Choose your next read", description: "Browse the shared shelves and open a book to see its details and availability." },
+            { number: "02", title: "Borrow for two weeks", description: "Confirm your loan while a copy is available. Your borrowed books appear in My Borrows." },
+            { number: "03", title: "Return it with care", description: "When you finish, return the book from My Borrows so its owner can share it again." },
+          ].map(({ number, title, description }) => (
+            <motion.article
+              key={number}
+              className="rounded-2xl border border-[#e6e2d8] bg-[#fffefa] p-6 sm:p-7"
+              data-reveal
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.35, delay: Number(number) * 0.03 }}
+            >
+              <span className="serif text-3xl text-[#bd7158]">{number}</span>
+              <h3 className="serif mt-5 text-2xl">{title}</h3>
+              <p className="mt-3 text-sm leading-6 text-[#788077]">{description}</p>
+            </motion.article>
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
+        className="page-width py-20 sm:py-24"
+        data-reveal
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.45 }}
+      >
         <div className="flex flex-col justify-between gap-6 border-b border-[#e4e0d6] pb-7 sm:flex-row sm:items-end">
           <div>
             <p className="eyebrow">A little something for every reader</p>
@@ -138,7 +173,7 @@ export default function HomePage() {
             <Link
               key={category}
               href={`/books?category=${category}`}
-              className="group rounded-xl p-5 transition-transform hover:-translate-y-1 sm:p-6"
+              className="category-card group rounded-xl p-5 transition-transform hover:-translate-y-1 sm:p-6"
               style={{ backgroundColor: color }}
             >
               <Leaf size={17} className="text-[#59735d]" />
@@ -147,7 +182,7 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-      </section>
+      </motion.section>
     </>
   );
 }

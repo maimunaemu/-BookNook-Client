@@ -4,6 +4,7 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import BookCard from "@/components/book-card";
 import EmptyState from "@/components/empty-state";
+import LoadingState from "@/components/loading-state";
 import { apiRequest, ApiError } from "@/lib/api";
 import { bookCategories, type Book, type BookCategory } from "@/lib/types";
 
@@ -84,9 +85,7 @@ export default function AllBooks({ initialCategory }: { initialCategory: string 
         </div>
         <div className="mt-5">
           {loading ? (
-            <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-3">
-              {Array.from({ length: 8 }, (_, index) => <div key={index} className="aspect-[4/5.6] animate-pulse rounded-xl bg-[#e9e7dd]" />)}
-            </div>
+            <LoadingState label="Looking through the shelves…" className="min-h-64" />
           ) : error ? (
             <div className="rounded-2xl border border-[#e5ddd3] bg-[#fffefa] px-6 py-12 text-center">
               <h2 className="serif text-2xl">We couldn&apos;t reach the shelves.</h2>

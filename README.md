@@ -15,7 +15,7 @@ A polished, community-powered independent-bookstore experience. Readers can disc
 
 - Responsive editorial storefront with three-slide hero, latest books, reading categories, and helpful empty/error/loading states
 - Searchable, filterable collection and private book detail pages
-- Account registration, email/password and Google login, persistent sessions, and protected reading-room pages
+- Account registration, email/password login, optional Google OAuth, persistent sessions, and protected reading-room pages
 - Book upload/edit, ownership-checked deletion, and cover URL or imgbb image upload
 - Borrow/return workflows with 14-day due dates and server-enforced inventory consistency
 - Reader profile, custom 404 page, page metadata, and keyboard-friendly forms
@@ -60,9 +60,9 @@ npm start
 | `BETTER_AUTH_URL` | Yes | Better Auth base origin, e.g. `http://localhost:3000`. |
 | `GOOGLE_CLIENT_ID` | For Google login | OAuth client ID from the Google Cloud project. |
 | `GOOGLE_CLIENT_SECRET` | For Google login | OAuth client secret from the Google Cloud project. |
-| `NEXT_PUBLIC_IMGBB_API_KEY` | For direct image upload | imgbb API key used by the browser for cover uploads. It is necessarily public; restrict/rotate it as appropriate. Users may also paste an existing cover URL. |
+| `NEXT_PUBLIC_IMGBB_API_KEY` | For direct image upload | imgbb API key used by the browser for optional cover uploads. Request a key from [imgbb's API page](https://api.imgbb.com/), then put it in the client project's ignored `.env.local` file and restart Next.js. The `NEXT_PUBLIC_` prefix makes it visible to browsers; restrict/rotate it as appropriate. Users may also paste a hosted cover URL or leave the cover blank. |
 
-For Google OAuth, configure the authorized redirect URI as `http://localhost:3000/api/auth/callback/google` locally and the equivalent HTTPS callback for production. Registration and email/password sign-in work without Google credentials.
+For Google OAuth, set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in the **client project's server-side** `.env.local` file (or the client deployment's secret settings); do not use a `NEXT_PUBLIC_` prefix. In Google Cloud, configure the authorized redirect URI as `http://localhost:3000/api/auth/callback/google` locally and the equivalent HTTPS callback for production. Restart the Next.js server after changing environment settings. Registration and email/password sign-in work without Google credentials.
 
 Do not commit `.env.local` or any other real environment file. `.env.example` contains placeholders only.
 

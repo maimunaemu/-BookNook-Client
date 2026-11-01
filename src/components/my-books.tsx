@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import BookCover from "@/components/book-cover";
 import BookForm from "@/components/book-form";
 import EmptyState from "@/components/empty-state";
+import LoadingState from "@/components/loading-state";
 import { apiRequest, ApiError } from "@/lib/api";
 import type { Book } from "@/lib/types";
 
@@ -69,7 +70,7 @@ export default function MyBooks() {
           <button type="button" onClick={() => void loadBooks()} className="inline-flex items-center gap-2 text-xs font-semibold text-[#526b56] hover:text-[#bd7158]"><RefreshCw size={14} /> Refresh</button>
         </div>
         {loading ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">{Array.from({ length: 4 }, (_, i) => <div key={i} className="aspect-[4/5.5] animate-pulse rounded-xl bg-[#e9e7dd]" />)}</div>
+          <LoadingState label="Gathering your books…" className="min-h-64" />
         ) : error ? (
           <div className="rounded-2xl bg-white p-10 text-center">
             <p className="serif text-2xl">Your shelf is temporarily out of reach.</p>

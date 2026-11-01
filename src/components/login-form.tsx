@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, BookOpen, Eye, EyeOff, Mail } from "lucide-react";
+import { ArrowLeft, BookOpen, Eye, EyeOff, LoaderCircle, Mail } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import GoogleAuthButton from "@/components/google-auth-button";
 
 function safeDestination(value: string | null): string {
   if (!value?.startsWith("/") || value.startsWith("//")) return "/";
@@ -49,18 +50,6 @@ export default function LoginForm() {
     }
   }
 
-  async function googleLogin() {
-    try {
-      const result = await authClient.signIn.social({
-        provider: "google",
-        callbackURL: destination,
-      });
-      if (result.error) toast.error(result.error.message ?? "Google sign-in isn't available right now.");
-    } catch {
-      toast.error("Google sign-in isn't configured yet. Please try email and password.");
-    }
-  }
-
   return (
     <section className="page-width grid min-h-[68vh] items-center gap-12 py-12 lg:grid-cols-[1fr_0.85fr] lg:py-16">
       <div className="hidden overflow-hidden rounded-[1.6rem] bg-[#203b2e] lg:block">
@@ -87,9 +76,7 @@ export default function LoginForm() {
         <h2 className="serif mt-2 text-4xl">Come on in.</h2>
         <p className="mt-3 text-sm text-[#778078]">Log in to find your next borrowed read.</p>
 
-        <button type="button" onClick={googleLogin} className="button-secondary mt-7 w-full">
-          <span className="serif text-base font-bold">G</span> Continue with Google
-        </button>
+        <GoogleAuthButton callbackURL={destination} />
         <div className="my-6 flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.12em] text-[#9a9e97]">
           <span className="h-px flex-1 bg-[#e5e2d9]" /> or use your email <span className="h-px flex-1 bg-[#e5e2d9]" />
         </div>
@@ -111,6 +98,7 @@ export default function LoginForm() {
             </span>
           </label>
           <button type="submit" disabled={busy} className="button-primary mt-2 w-full">
+            {busy && <LoaderCircle size={16} className="animate-spin" />}
             {busy ? "Opening your nook…" : "Log in"}
           </button>
         </form>

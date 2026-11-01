@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowDownRight, ArrowRight } from "lucide-react";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useReducedMotion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
@@ -33,12 +34,13 @@ const slides = [
 ];
 
 export default function HeroSlider() {
+  const reduceMotion = useReducedMotion();
   return (
     <section className="relative overflow-hidden bg-[#203b2e]">
       <Swiper
         modules={[Autoplay, EffectFade, Pagination]}
         effect="fade"
-        autoplay={{ delay: 6500, disableOnInteraction: false }}
+        autoplay={reduceMotion ? false : { delay: 6500, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         loop
         className="!h-[590px] md:!h-[620px]"

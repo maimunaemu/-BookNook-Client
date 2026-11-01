@@ -6,6 +6,7 @@ import { BookOpen, ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import ThemeToggle from "@/components/theme-toggle";
 
 const navigation = [
   { label: "Home", href: "/" },
@@ -31,7 +32,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
     router.push("/");
   }
 
-  const loginFor = (destination: string) => `/login?callbackURL=${encodeURIComponent(destination)}`;
+  const visibleNavigation = navigation.filter((item) => !item.private || Boolean(session));
 
   return (
     <>
@@ -48,10 +49,10 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
           </Link>
 
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
-            {navigation.map((item) => (
+            {visibleNavigation.map((item) => (
               <Link
                 key={item.href}
-                href={item.private && !session ? loginFor(item.href) : item.href}
+                href={item.href}
                 className={`text-[0.83rem] transition-colors hover:text-[#bd7158] ${
                   pathname === item.href ? "font-semibold text-[#244b3a]" : "text-[#606961]"
                 }`}
@@ -62,6 +63,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
           </nav>
 
           <div className="flex shrink-0 items-center gap-3">
+            <ThemeToggle />
             {!isPending && (session ? (
               <details className="group relative">
                 <summary className="flex cursor-pointer list-none items-center gap-2 rounded-full p-1.5 pr-2.5 hover:bg-white">
@@ -105,10 +107,10 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
         </div>
         {menuOpen && (
           <nav className="border-t border-[#e9e5db] bg-[#f7f5ef] px-6 py-3 lg:hidden" aria-label="Mobile navigation">
-            {navigation.map((item) => (
+            {visibleNavigation.map((item) => (
               <Link
                 key={item.href}
-                href={item.private && !session ? loginFor(item.href) : item.href}
+                href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className="block rounded-lg px-2 py-3 text-sm font-medium text-[#445249] hover:bg-white"
               >

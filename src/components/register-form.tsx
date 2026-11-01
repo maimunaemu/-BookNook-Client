@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, BookOpen, Eye, EyeOff, UserRound } from "lucide-react";
+import { ArrowLeft, BookOpen, Eye, EyeOff, LoaderCircle, UserRound } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import GoogleAuthButton from "@/components/google-auth-button";
 
 function safeDestination(value: string | null): string {
   if (!value?.startsWith("/") || value.startsWith("//")) return "/";
@@ -79,6 +80,10 @@ export default function RegisterForm() {
         <p className="eyebrow mt-5">A place for your next chapter</p>
         <h1 className="serif mt-2 text-4xl">Make yourself at home.</h1>
         <p className="mt-3 text-sm text-[#778078]">Create an account to share and borrow books.</p>
+        <GoogleAuthButton callbackURL={destination} />
+        <div className="my-5 flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.12em] text-[#9a9e97]">
+          <span className="h-px flex-1 bg-[#e5e2d9]" /> or use your email <span className="h-px flex-1 bg-[#e5e2d9]" />
+        </div>
         <form onSubmit={submit} className="mt-7 space-y-3.5">
           <label className="block text-sm font-medium">
             Your name
@@ -92,7 +97,7 @@ export default function RegisterForm() {
             <input className="field mt-1.5" type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
           </label>
           <label className="block text-sm font-medium">
-            Photo URL
+            Photo URL <span className="text-xs font-normal text-[#8a9188]">(Optional)</span>
             <input className="field mt-1.5" type="url" placeholder="https://…" value={image} onChange={(event) => setImage(event.target.value)} />
           </label>
           <label className="block text-sm font-medium">
@@ -106,6 +111,7 @@ export default function RegisterForm() {
             <span className="mt-1 block text-xs font-normal text-[#8b9189]">At least 6 characters, including uppercase and lowercase letters.</span>
           </label>
           <button type="submit" disabled={busy} className="button-primary mt-2 w-full">
+            {busy && <LoaderCircle size={16} className="animate-spin" />}
             {busy ? "Saving your place…" : "Create account"}
           </button>
         </form>

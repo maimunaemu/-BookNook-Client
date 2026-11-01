@@ -6,6 +6,7 @@ import { ArrowUpRight, CalendarClock, LoaderCircle, RotateCcw } from "lucide-rea
 import { toast } from "sonner";
 import BookCover from "@/components/book-cover";
 import EmptyState from "@/components/empty-state";
+import LoadingState from "@/components/loading-state";
 import { apiRequest, ApiError } from "@/lib/api";
 import type { Borrow } from "@/lib/types";
 
@@ -61,7 +62,7 @@ export default function MyBorrows() {
       </section>
       <section className="page-width py-9 sm:py-12">
         {loading ? (
-          <div className="space-y-3">{Array.from({ length: 3 }, (_, i) => <div key={i} className="h-24 animate-pulse rounded-xl bg-[#e9e7dd]" />)}</div>
+          <LoadingState label="Finding your borrowed books…" className="min-h-64" />
         ) : error ? (
           <div className="rounded-2xl bg-white p-10 text-center">
             <h2 className="serif text-2xl">Your reading list is out of reach.</h2>
