@@ -14,7 +14,7 @@ const slides = [
     eyebrow: "A neighborhood reading room",
     title: <>Some stories are<br />better <em>shared.</em></>,
     description: "Find the books waiting for you on a neighbor’s shelf. Leave a favorite behind for someone else.",
-    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=2000&q=85",
+    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=2000&q=85",
     position: "center 54%",
   },
   {
