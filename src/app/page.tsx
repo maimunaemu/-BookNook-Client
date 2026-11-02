@@ -47,9 +47,6 @@ export default function HomePage() {
               The newest stories finding their way around the Nook.
             </p>
           </div>
-          <Link href="/books" className="button-secondary w-fit">
-            See all books <ArrowRight size={15} />
-          </Link>
         </div>
 
         <div className="mt-9">
@@ -75,6 +72,11 @@ export default function HomePage() {
               href="/add-book"
             />
           )}
+        </div>
+        <div className="mt-8 flex justify-center">
+          <Link href="/books" className="button-secondary w-fit">
+            See all books <ArrowRight size={15} />
+          </Link>
         </div>
       </section>
 

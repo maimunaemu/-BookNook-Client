@@ -25,11 +25,3 @@
 - Better Auth
 - MongoDB
 
-## Book cover image uploads
-
-Set `IMGBB_API_KEY` in your local `.env.local` file for development. In Vercel, add
-`IMGBB_API_KEY` under **Project Settings → Environment Variables** for each environment
-where uploads should work, then redeploy. Do not use the `NEXT_PUBLIC_` prefix; the key
-is used only by the server-side upload route and should not be exposed in the browser.
-
-Cover uploads accept image files up to 4 MB.
