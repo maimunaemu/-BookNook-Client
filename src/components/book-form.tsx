@@ -17,9 +17,8 @@ interface BookFormProps {
 }
 
 interface ImageUploadResponse {
-  success: boolean;
-  data?: { url: string };
-  error?: { message?: string };
+  url?: string;
+  error?: string;
 }
 
 export default function BookForm({ book, onComplete, onCancel }: BookFormProps) {
@@ -41,29 +40,23 @@ export default function BookForm({ book, onComplete, onCancel }: BookFormProps) 
       toast.error("Choose an image file for the book cover.");
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("Cover images must be smaller than 10 MB.");
+    if (file.size > 4 * 1024 * 1024) {
+      toast.error("Cover images must be 4 MB or smaller.");
       return;
     }
-    const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
-    if (!apiKey) {
-      toast.error("Image upload isn't configured yet. Add the imgbb API key to the client environment.");
-      return;
-    }
-
     setBusy(true);
     try {
       const formData = new FormData();
       formData.append("image", file);
-      const response = await fetch(`https://api.imgbb.com/1/upload?key=${encodeURIComponent(apiKey)}`, {
+      const response = await fetch("/api/upload/cover", {
         method: "POST",
         body: formData,
       });
       const payload = await response.json() as ImageUploadResponse;
-      if (!response.ok || !payload.success || !payload.data?.url) {
-        throw new Error(payload.error?.message ?? "The image host couldn't save this cover.");
+      if (!response.ok || !payload.url) {
+        throw new Error(payload.error ?? "The image host couldn't save this cover.");
       }
-      setCoverImage(payload.data.url);
+      setCoverImage(payload.url);
       toast.success("Cover uploaded.");
     } catch (reason) {
       toast.error(reason instanceof Error ? reason.message : "The cover couldn't be uploaded. Please try again.");
@@ -147,7 +140,7 @@ export default function BookForm({ book, onComplete, onCancel }: BookFormProps) 
           <label htmlFor="cover-upload" className="block text-sm font-medium">
             Book cover <span className="text-xs font-normal text-[#8a9188]">(Optional)</span>
           </label>
-          <span className="text-xs text-[#8a9188]">JPG, PNG or WebP · up to 10 MB</span>
+          <span className="text-xs text-[#8a9188]">JPG, PNG or WebP · up to 4 MB</span>
         </div>
         <div className="mt-2 grid gap-4 rounded-xl border border-dashed border-[#d4d8ce] bg-[#f7f6f0] p-4 sm:grid-cols-[112px_1fr] sm:p-5">
           <BookCover src={coverImage} title={title || "Your book"} className="aspect-[3/4] w-28 rounded-lg" />
